@@ -13,6 +13,7 @@
     "@chatscope/chat-ui-kit-react": "^2.0.3",
     "@tanstack/react-query": "^5.52.1",
     "axios": "^1.7.4",
+    "dompurify": "^3.1.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "recoil": "^0.7.7",
@@ -22,6 +23,7 @@
     "yarn": "^1.22.22"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.5",
     "@types/node": "^22.4.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

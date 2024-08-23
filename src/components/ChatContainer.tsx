@@ -1,5 +1,6 @@
 import React from 'react'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
+import DOMPurify from 'dompurify' // DOMPurify로 보안 강화
 import { ChatContainer, MessageList, Message, TypingIndicator, MessageInput } from '@chatscope/chat-ui-kit-react'
 import { ChatMessage } from '../types/chatTypes'
 
@@ -10,6 +11,13 @@ interface ChatContainerProps {
 }
 
 const ChatContainerComponent: React.FC<ChatContainerProps> = ({ messages, isTyping, onSendMessage }) => {
+  const renderMessageContent = (message: string) => {
+    // 메시지를 정제
+    const sanitizedMessage = DOMPurify.sanitize(message)
+
+    // HTML 콘텐츠를 dangerouslySetInnerHTML로 렌더링
+    return <div dangerouslySetInnerHTML={{ __html: sanitizedMessage }} />
+  }
   return (
     <ChatContainer>
       <MessageList typingIndicator={isTyping ? <TypingIndicator content="ChatGPT is typing..." /> : null}>
@@ -24,7 +32,9 @@ const ChatContainerComponent: React.FC<ChatContainerProps> = ({ messages, isTypi
               position: message.position,
             }}
             style={message.sender === 'ChatGPT' ? { textAlign: 'left' } : {}}
-          />
+          >
+            {renderMessageContent(message.message)}
+          </Message>
         ))}
       </MessageList>
       <MessageInput placeholder="Type Message here" onSend={onSendMessage} />
