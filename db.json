@@ -1,0 +1,6 @@
+{
+  "messages": [
+    { "id": 1, "message": "Hello from the dapTalk!", "sender": "dapTalk", "direction": "incoming", "position": "single" },
+    { "id": 2, "message": "How can I assist you today?", "sender": "dapTalk", "direction": "incoming", "position": "single" }
+  ]
+}
