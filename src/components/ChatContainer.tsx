@@ -2,7 +2,7 @@ import React from 'react'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
 import DOMPurify from 'dompurify' // DOMPurify로 보안 강화
 import { ChatContainer, MessageList, Message, TypingIndicator, MessageInput } from '@chatscope/chat-ui-kit-react'
-import { ChatMessage } from '../types/chatTypes'
+import { ChatMessage } from '@/lib/types/chatTypes'
 
 interface ChatContainerProps {
   messages: ChatMessage[]

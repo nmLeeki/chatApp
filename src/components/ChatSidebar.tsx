@@ -1,7 +1,7 @@
 import React from 'react'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
 import { Sidebar, ConversationList, Conversation, Avatar } from '@chatscope/chat-ui-kit-react'
-import { ChatRoom } from '../types/chatTypes'
+import { ChatRoom } from '@/lib/types/chatTypes'
 
 interface ChatSidebarProps {
   chatRooms: ChatRoom[]

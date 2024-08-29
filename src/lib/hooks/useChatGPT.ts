@@ -1,7 +1,7 @@
 // hooks/useChatGPT.ts
 import { useState } from 'react'
-import { sendMessageToChatGPTAPI } from '../services/chatAPI'
-import { ChatMessage } from '../types/chatTypes'
+import { sendMessageToChatGPTAPI } from '@/lib/api/chatAPI'
+import { ChatMessage } from '@/lib/types/chatTypes'
 
 export const useChatGPT = (API_ENDPOINT: string, OPENAI_API_KEY: string) => {
   const [isChatbotTyping, setIsChatbotTyping] = useState(false)

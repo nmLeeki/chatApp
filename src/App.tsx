@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import './styles/App.css'
 import { MainContainer } from '@chatscope/chat-ui-kit-react'
-import ChatSidebar from './components/ChatSidebar'
+import ChatSidebar from '@/components/ChatSidebar'
 import ChatContainerComponent from './components/ChatContainer'
-import { useChatGPT } from './hooks/useChatGPT'
+import { useChatGPT } from '@/lib/hooks/useChatGPT'
 import axios from 'axios' // Mock 서버와 통신하기 위해 사용
-import { ChatRoom, ChatMessage } from './types/chatTypes'
-import avatarImage from './assets/ico_avatar_01.svg'
+import { ChatRoom, ChatMessage } from '@/lib/types/chatTypes'
+import avatarImage from '@/assets/ico_avatar_01.svg'
 
 function ChatApp() {
   const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions'
