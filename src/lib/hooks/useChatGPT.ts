@@ -6,7 +6,7 @@ import { ChatMessage } from '@/lib/types/chatTypes'
 export const useChatGPT = (API_ENDPOINT: string, OPENAI_API_KEY: string) => {
   const [isChatbotTyping, setIsChatbotTyping] = useState(false)
 
-  const sendMessageToChatGPT = async (messages: ChatMessage[]): Promise<ChatMessage | null> => {
+  const sendMessageToChatGPT = async (messages: ChatMessage[], p0: (newMessage: any) => void): Promise<ChatMessage | null> => {
     try {
       setIsChatbotTyping(true)
 
