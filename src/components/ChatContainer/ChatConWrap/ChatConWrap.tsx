@@ -1,12 +1,16 @@
 import React from 'react'
-import StyledChatContainerBox from '@/components/ChatContainer/ChatConWrap/ChatConWrap.style'
-
+import { StyledChatConWrap, StyledChatCon } from '@/components/ChatContainer/ChatConWrap/ChatConWrap.style'
+import { ChatContainer } from '@chatscope/chat-ui-kit-react'
 interface ChatContainerBoxProps {
   children: React.ReactNode
 }
 
 const ChatConWrap: React.FC<ChatContainerBoxProps> = ({ children }) => {
-  return <StyledChatContainerBox>{children}</StyledChatContainerBox>
+  return (
+    <StyledChatConWrap>
+      <StyledChatCon>{children}</StyledChatCon>
+    </StyledChatConWrap>
+  )
 }
 
 export default ChatConWrap

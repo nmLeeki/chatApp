@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { MainContainer } from '@chatscope/chat-ui-kit-react'
-import ChatCon from '@/components/ChatContainer/ChatCon/ChatCon'
 import MyAppBar from '../components/ChatHeader/AppBar/AppBar'
 import { useChatGPT } from '@/lib/hooks/useChatGPT'
 import { ChatMessage, ChatRoom } from '@/lib/types/chatTypes'
 import avatarImage from '@/assets/ico_avatar_01.svg'
+import ChatConWrap from '@/components/ChatContainer/ChatConWrap/ChatConWrap'
+import ChatContainerComponent from '@/components/ChatContainer'
 
 const ChatPage: React.FC = () => {
   const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions'
@@ -12,6 +13,8 @@ const ChatPage: React.FC = () => {
 
   const { isChatbotTyping, sendMessageToChatGPT } = useChatGPT(API_ENDPOINT, OPENAI_API_KEY)
   const [selectedChatRoomId, setSelectedChatRoomId] = useState('1')
+  const [fontSize, setFontSize] = useState(1.6) // fontSize 상태 (rem 단위로 관리)
+  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false) // LeftDrawer
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([
     {
       id: '1',
@@ -34,7 +37,9 @@ const ChatPage: React.FC = () => {
   ])
 
   const currentChatRoom = chatRooms.find((chatRoom) => chatRoom.id === selectedChatRoomId)
-
+  const toggleLeftDrawer = (open: boolean) => {
+    setIsLeftDrawerOpen(open)
+  }
   const handleUserMessage = async (userInput: string) => {
     if (!currentChatRoom) return
 
@@ -48,7 +53,9 @@ const ChatPage: React.FC = () => {
     const updatedChatRooms = chatRooms.map((chatRoom) => (chatRoom.id === selectedChatRoomId ? { ...chatRoom, messages: [...chatRoom.messages, newUserMessage] } : chatRoom))
     setChatRooms(updatedChatRooms)
 
+    console.log(isChatbotTyping)
     await sendMessageToChatGPT([...currentChatRoom.messages, newUserMessage], (newMessage) => {
+      console.log('Message received from ChatGPT:', newMessage)
       setChatRooms((prevChatRooms) => prevChatRooms.map((chatRoom) => (chatRoom.id === selectedChatRoomId ? { ...chatRoom, messages: [...chatRoom.messages, newMessage] } : chatRoom)))
     })
   }
@@ -66,7 +73,7 @@ const ChatPage: React.FC = () => {
   }
 
   return (
-    <MainContainer>
+    <MainContainer style={{ flexDirection: 'column', fontSize: `${fontSize}rem` }}>
       <MyAppBar
         chatRooms={chatRooms}
         selectedChatRoomId={selectedChatRoomId}
@@ -75,14 +82,14 @@ const ChatPage: React.FC = () => {
         onDecreaseFontSize={handleDecreaseFontSize}
       />
       {currentChatRoom && (
-        <ChatCon
+        <ChatContainerComponent
           messages={currentChatRoom.messages}
           isTyping={isChatbotTyping}
           onSendMessage={handleUserMessage}
           chatRooms={chatRooms}
           selectedChatRoomId={selectedChatRoomId}
           onSelectChatRoom={handleChatRoomClick}
-          toggleLeftDrawer={() => {}}
+          toggleLeftDrawer={toggleLeftDrawer}
         />
       )}
     </MainContainer>

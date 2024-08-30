@@ -8,7 +8,7 @@ import { ChatRoom } from '@/lib/types/chatTypes'
 import menuIcon from '@/assets/images/menu.png'
 import BottomMenu from '@/components/ChatHeader/bottomMenu/bottomMenu'
 import StyledAppBar from '@/components/ChatHeader/AppBar/AppBar.style'
-import LeftMenu from '@/components/ChatNavigation/LeftMenu/LeftMenu'
+import LeftMenu from '@/components/ChatContainer/LeftMenu/LeftMenu'
 
 interface AppBarProps {
   chatRooms: ChatRoom[] // ChatSidebar에 전달할 채팅방 목록

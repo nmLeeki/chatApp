@@ -1,7 +1,7 @@
 import React from 'react'
-import ChatSidebar from '@/components/ChatNavigation/ChatSidebar/ChatSidebar'
+import ChatSidebar from '@/components/ChatContainer/ChatSidebar/ChatSidebar'
 import { ChatRoom } from '@/lib/types/chatTypes'
-import StyledLeftMenu from '@/components/ChatNavigation/LeftMenu/LeftMenu.style'
+import StyledLeftMenu from '@/components/ChatContainer/LeftMenu/LeftMenu.style'
 
 interface LeftMenuProps {
   chatRooms: ChatRoom[]

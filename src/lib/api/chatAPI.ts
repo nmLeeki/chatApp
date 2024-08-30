@@ -20,6 +20,6 @@ export const sendMessageToChatGPTAPI = async (messages: ChatMessage[], API_ENDPO
       Authorization: `Bearer ${OPENAI_API_KEY}`,
     },
   })
-
+  console.log(response.data)
   return response.data.choices?.[0]?.message?.content
 }
