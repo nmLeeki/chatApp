@@ -4,24 +4,17 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import { Drawer, Tooltip } from '@mui/material'
-import { ChatRoom } from '@/types/chatTypes'
 import menuIcon from '@/assets/images/menu.png'
 import BottomMenu from '@/components/Navigation/bottomMenu/bottomMenu'
 import StyledAppBar from '@/components/Navigation/ChatNav/ChatNav.style'
 import LeftMenu from '@/components/ChatContainer/LeftMenu/LeftMenu'
+import { useSetRecoilState } from 'recoil'
+import { fontSizeState } from '@/recoil/'
 
-interface AppBarProps {
-  chatRooms: ChatRoom[] // ChatSidebar에 전달할 채팅방 목록
-  selectedChatRoomId: string // 선택된 채팅방 ID
-  onSelectChatRoom: (chatRoomId: string) => void // 채팅방 선택 핸들러
-  onIncreaseFontSize: () => void
-  onDecreaseFontSize: () => void
-}
-
-const ChatNav: React.FC<AppBarProps> = ({ chatRooms, selectedChatRoomId, onSelectChatRoom, onIncreaseFontSize, onDecreaseFontSize }) => {
+const ChatNav: React.FC = () => {
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false)
   const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
-  const [isIncrease, setIsIncrease] = useState(true)
+  const setFontSize = useSetRecoilState(fontSizeState)
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768)
 
   useEffect(() => {
@@ -31,7 +24,9 @@ const ChatNav: React.FC<AppBarProps> = ({ chatRooms, selectedChatRoomId, onSelec
 
     window.addEventListener('resize', handleResize)
 
-    // Cleanup on unmount
+    // 초기 설정
+    handleResize()
+
     return () => {
       window.removeEventListener('resize', handleResize)
     }
@@ -45,14 +40,8 @@ const ChatNav: React.FC<AppBarProps> = ({ chatRooms, selectedChatRoomId, onSelec
     }
   }
 
-  // 글자크기 조정
   const handleToggleFontSize = () => {
-    if (isIncrease) {
-      onIncreaseFontSize()
-    } else {
-      onDecreaseFontSize()
-    }
-    setIsIncrease(!isIncrease)
+    setFontSize((prevSize) => (prevSize === 1.6 ? 1.8 : 1.6))
   }
 
   return (
@@ -85,7 +74,7 @@ const ChatNav: React.FC<AppBarProps> = ({ chatRooms, selectedChatRoomId, onSelec
         open={isLeftDrawerOpen}
         onClose={() => setIsLeftDrawerOpen(false)} // LeftDrawer 닫기
       >
-        <LeftMenu chatRooms={chatRooms} selectedChatRoomId={selectedChatRoomId} onSelectChatRoom={onSelectChatRoom} />
+        <LeftMenu />
       </Drawer>
       <Drawer anchor="bottom" open={isBottomDrawerOpen} onClose={toggleDrawer('bottom', false)}>
         <BottomMenu onClose={toggleDrawer('bottom', false)} />

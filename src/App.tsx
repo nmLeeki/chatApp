@@ -3,6 +3,7 @@ import ChatPage from '@/papes/ChatPage'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
+import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
 import theme from '@/styles/theme'
 import './styles/Global.css'
 function App() {

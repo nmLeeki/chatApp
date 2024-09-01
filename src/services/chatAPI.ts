@@ -7,19 +7,28 @@ export const sendMessageToChatGPTAPI = async (messages: ChatMessage[], API_ENDPO
     content: message.message,
   }))
 
-  const apiRequestBody = JSON.stringify({
+  const apiRequestBody = {
     model: 'gpt-3.5-turbo',
     messages: apiMessages,
     max_tokens: 2048,
     temperature: 0.7,
-  })
+  }
 
-  const response = await axios.post(API_ENDPOINT, apiRequestBody, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-    },
-  })
-  console.log(response.data)
-  return response.data.choices?.[0]?.message?.content
+  try {
+    const response = await axios.post(API_ENDPOINT, apiRequestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+    })
+
+    if (response.status !== 200) {
+      throw new Error(`API 호출 실패: ${response.status} - ${response.statusText}`)
+    }
+
+    return response.data.choices?.[0]?.message?.content
+  } catch (error) {
+    console.error('ChatGPT API 호출 실패:', error)
+    throw error
+  }
 }

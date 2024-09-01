@@ -1,65 +1,89 @@
 import React, { useEffect, useState } from 'react'
-import { MessageInput, TypingIndicator, Avatar, Message, MessageList, ChatContainer, MessageSeparator } from '@chatscope/chat-ui-kit-react'
-import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
-import DOMPurify from 'dompurify'
-import { ChatMessage, ChatRoom } from '@/types/chatTypes'
+import { MessageInput, TypingIndicator, Message, MessageList, ChatContainer, Avatar, MessageSeparator } from '@chatscope/chat-ui-kit-react'
+import ChatConWrap from '@/components/ChatContainer/ChatConWrap/ChatConWrap'
+import LeftMenu from '@/components/ChatContainer/LeftMenu/LeftMenu'
 import { StyledChatBox, StyledTypingIndicator } from '@/components/ChatContainer/ChatConWrap/ChatConWrap.style'
 import WelcomeBox from '@/components/ChatContainer/WelcomeBox/WelcomeBox'
-import ChatConWrap from '@/components/ChatContainer/ChatConWrap/ChatConWrap'
-import ChatSidebar from '@/components/ChatContainer/ChatSidebar/ChatSidebar'
+import DOMPurify from 'dompurify'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { chatRoomsState, currentChatRoomMessagesState, isChatbotTypingState, selectedChatRoomIdState } from '@/recoil/'
+import { useChatGPT } from '@/hooks/useChatGPT'
+import { ChatMessage } from '@/types/chatTypes'
+import { getCurrentKoreanTime } from '@/services/util'
 
-interface ChatContainerProps {
-  messages: ChatMessage[]
-  isTyping: boolean
-  onSendMessage: (message: string) => void
-  chatRooms: ChatRoom[]
-  selectedChatRoomId: string
-  onSelectChatRoom: (chatRoomId: string) => void
-  toggleLeftDrawer: (open: boolean) => void
-}
+const ChatContainerComponent: React.FC = () => {
+  const API_ENDPOINT = 'https://api.openai.com/v1/chat/completions'
+  const OPENAI_API_KEY = import.meta.env.VITE_APP_OPEN_API_KEY
+  const messages = useRecoilValue(currentChatRoomMessagesState)
+  const isTyping = useRecoilValue(isChatbotTypingState)
+  const selectedChatRoomId = useRecoilValue(selectedChatRoomIdState)
+  const chatRooms = useRecoilValue(chatRoomsState)
 
-const ChatContainerComponent: React.FC<ChatContainerProps> = ({ messages, isTyping, onSendMessage, chatRooms, selectedChatRoomId, onSelectChatRoom, toggleLeftDrawer }) => {
+  const setChatRooms = useSetRecoilState(chatRoomsState)
+
+  const { sendMessageToChatGPT } = useChatGPT(API_ENDPOINT, OPENAI_API_KEY)
+
   const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 768)
+
+  const currentChatRoom = chatRooms.find((chatRoom: { id: string }) => chatRoom.id === selectedChatRoomId) // chatRooms에서 현재 채팅방 찾기
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 768px)')
     const handleMediaChange = (e: MediaQueryListEvent) => {
       setIsDesktopView(e.matches)
-      toggleLeftDrawer(e.matches)
-    }
-    if (mediaQuery.matches) {
-      toggleLeftDrawer(true)
     }
     mediaQuery.addEventListener('change', handleMediaChange)
     return () => {
       mediaQuery.removeEventListener('change', handleMediaChange)
     }
-  }, [toggleLeftDrawer])
+  }, [])
+
   const renderMessageContent = (message: string) => {
     const sanitizedMessage = DOMPurify.sanitize(message)
     return <div dangerouslySetInnerHTML={{ __html: sanitizedMessage }} />
   }
 
-  const handleSendMessage = (message: string) => {
+  const handleSendMessage = async (message: string) => {
     const sanitizedMessage = DOMPurify.sanitize(message)
-    onSendMessage(sanitizedMessage)
+
+    const newUserMessage: ChatMessage = {
+      message: sanitizedMessage,
+      sender: 'user',
+      direction: 'outgoing',
+      position: 'single',
+      timestamp: getCurrentKoreanTime(),
+    }
+
+    // 먼저 사용자의 메시지를 Recoil 상태에 추가
+    setChatRooms((prevChatRooms) => prevChatRooms.map((chatRoom) => (chatRoom.id === selectedChatRoomId ? { ...chatRoom, messages: [...chatRoom.messages, newUserMessage] } : chatRoom)))
+
+    try {
+      // currentChatRoom이 undefined일 경우 기본값 사용
+
+      const currentMessages = currentChatRoom?.messages ?? []
+      console.log(currentMessages)
+      // ChatGPT에게 메시지를 전송하고 응답을 받으면 다시 상태를 업데이트
+      sendMessageToChatGPT([...currentMessages, newUserMessage], (newMessage) => {
+        console.log('Message received from ChatGPT:', newMessage)
+        setChatRooms((prevChatRooms) => prevChatRooms.map((chatRoom) => (chatRoom.id === selectedChatRoomId ? { ...chatRoom, messages: [...chatRoom.messages, newMessage] } : chatRoom)))
+      })
+    } catch (error) {
+      console.error('메시지 전송 실패:', error)
+      console.log('asdasdasdasdasd')
+    }
   }
+
   return (
     <ChatConWrap>
-      {isDesktopView && <ChatSidebar chatRooms={chatRooms} selectedChatRoomId={selectedChatRoomId} onSelectChatRoom={onSelectChatRoom} />}
+      {isDesktopView && <LeftMenu />}
       <ChatContainer>
         <MessageList
           typingIndicator={
             isTyping ? (
-              // AI답변 생성중
               <StyledTypingIndicator>
                 <TypingIndicator content="AI 답변을 생성중입니다..." />
               </StyledTypingIndicator>
-            ) : //AI답변 생성완료
-            // <StyledTypingIndicatorComplete>
-            //   <TypingIndicator content="AI 답변이 생성되었습니다." />
-            //   <Button variant='text'>답변보러가기</Button>
-            // </StyledTypingIndicatorComplete>
-            null
+            ) : null
           }
         >
           <WelcomeBox />
@@ -83,11 +107,11 @@ const ChatContainerComponent: React.FC<ChatContainerProps> = ({ messages, isTypi
               >
                 {renderMessageContent(message.message)}
               </Message>
-              <MessageSeparator content="PM 4:20" />
+              <MessageSeparator content={message.timestamp} />
             </StyledChatBox>
           ))}
         </MessageList>
-        <MessageInput autoFocus placeholder="질문을 입력해 주세요." onSend={handleSendMessage} />
+        <MessageInput placeholder="질문을 입력해 주세요." onSend={handleSendMessage} />
       </ChatContainer>
     </ChatConWrap>
   )

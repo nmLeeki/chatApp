@@ -1,18 +1,24 @@
+// components/ChatContainer/LeftMenu/LeftMenu.tsx
 import React from 'react'
-import ChatSidebar from '@/components/ChatContainer/ChatSidebar/ChatSidebar'
-import { ChatRoom } from '@/types/chatTypes'
 import StyledLeftMenu from '@/components/ChatContainer/LeftMenu/LeftMenu.style'
+import { Avatar, Conversation, ConversationList, Sidebar } from '@chatscope/chat-ui-kit-react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { chatRoomsState, selectedChatRoomIdState } from '@/recoil/'
 
-interface LeftMenuProps {
-  chatRooms: ChatRoom[]
-  selectedChatRoomId: string
-  onSelectChatRoom: (chatRoomId: string) => void
-}
-
-const LeftMenu: React.FC<LeftMenuProps> = ({ chatRooms, selectedChatRoomId, onSelectChatRoom }) => {
+const LeftMenu: React.FC = () => {
+  const chatRooms = useRecoilValue(chatRoomsState) // 전체 채팅방 목록
+  const [selectedChatRoomId, setSelectedChatRoomId] = useRecoilState(selectedChatRoomIdState) // 선택된 채팅방 ID
   return (
     <StyledLeftMenu>
-      <ChatSidebar chatRooms={chatRooms} selectedChatRoomId={selectedChatRoomId} onSelectChatRoom={onSelectChatRoom} />
+      <Sidebar position="left" scrollable={false}>
+        <ConversationList>
+          {chatRooms.map((chatRoom) => (
+            <Conversation key={chatRoom.id} name={chatRoom.name} active={chatRoom.id === selectedChatRoomId} onClick={() => setSelectedChatRoomId(chatRoom.id)}>
+              <Avatar src={chatRoom.avatar} name={chatRoom.name} />
+            </Conversation>
+          ))}
+        </ConversationList>
+      </Sidebar>
     </StyledLeftMenu>
   )
 }

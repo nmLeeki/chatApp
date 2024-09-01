@@ -4,6 +4,7 @@ export interface ChatMessage {
   sender: string
   direction: 'incoming' | 'outgoing'
   position: 'single' | 'first' | 'normal' | 'last'
+  timestamp: string
 }
 
 export interface ChatRoom {
