@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { MainContainer } from '@chatscope/chat-ui-kit-react'
-import MyAppBar from '../components/ChatHeader/AppBar/AppBar'
-import { useChatGPT } from '@/lib/hooks/useChatGPT'
-import { ChatMessage, ChatRoom } from '@/lib/types/chatTypes'
+import ChatNav from '@/components/Navigation/ChatNav/ChatNav'
+import { useChatGPT } from '@/hooks/useChatGPT'
+import { ChatMessage, ChatRoom } from '@/types/chatTypes'
 import avatarImage from '@/assets/ico_avatar_01.svg'
 import ChatConWrap from '@/components/ChatContainer/ChatConWrap/ChatConWrap'
 import ChatContainerComponent from '@/components/ChatContainer'
@@ -74,7 +74,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <MainContainer style={{ flexDirection: 'column', fontSize: `${fontSize}rem` }}>
-      <MyAppBar
+      <ChatNav
         chatRooms={chatRooms}
         selectedChatRoomId={selectedChatRoomId}
         onSelectChatRoom={handleChatRoomClick}

@@ -1,7 +1,7 @@
 import { Avatar, Conversation, ConversationList, Sidebar } from '@chatscope/chat-ui-kit-react'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
 import React from 'react'
-import { ChatRoom } from '@/lib/types/chatTypes'
+import { ChatRoom } from '@/types/chatTypes'
 import StyledSidebar from '@/components/ChatContainer/ChatSidebar/ChatSidebar.style'
 
 interface ChatSidebarProps {

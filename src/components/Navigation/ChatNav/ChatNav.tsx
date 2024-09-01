@@ -4,10 +4,10 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import { Drawer, Tooltip } from '@mui/material'
-import { ChatRoom } from '@/lib/types/chatTypes'
+import { ChatRoom } from '@/types/chatTypes'
 import menuIcon from '@/assets/images/menu.png'
-import BottomMenu from '@/components/ChatHeader/bottomMenu/bottomMenu'
-import StyledAppBar from '@/components/ChatHeader/AppBar/AppBar.style'
+import BottomMenu from '@/components/Navigation/bottomMenu/bottomMenu'
+import StyledAppBar from '@/components/Navigation/ChatNav/ChatNav.style'
 import LeftMenu from '@/components/ChatContainer/LeftMenu/LeftMenu'
 
 interface AppBarProps {
@@ -18,7 +18,7 @@ interface AppBarProps {
   onDecreaseFontSize: () => void
 }
 
-const MyAppBar: React.FC<AppBarProps> = ({ chatRooms, selectedChatRoomId, onSelectChatRoom, onIncreaseFontSize, onDecreaseFontSize }) => {
+const ChatNav: React.FC<AppBarProps> = ({ chatRooms, selectedChatRoomId, onSelectChatRoom, onIncreaseFontSize, onDecreaseFontSize }) => {
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false)
   const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
   const [isIncrease, setIsIncrease] = useState(true)
@@ -94,4 +94,4 @@ const MyAppBar: React.FC<AppBarProps> = ({ chatRooms, selectedChatRoomId, onSele
   )
 }
 
-export default MyAppBar
+export default ChatNav

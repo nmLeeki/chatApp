@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ChatMessage } from '@/lib/types/chatTypes'
+import { ChatMessage } from '@/types/chatTypes'
 
 export const sendMessageToChatGPTAPI = async (messages: ChatMessage[], API_ENDPOINT: string, OPENAI_API_KEY: string) => {
   const apiMessages = messages.map((message) => ({

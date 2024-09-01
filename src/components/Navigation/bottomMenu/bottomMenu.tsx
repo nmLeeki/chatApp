@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
 
 import menuIcon from '@/assets/images/menu.png'
-import { StyledDrawerBody, StyledDrawerHeader } from '@/components/ChatHeader/bottomMenu/bottomMenu.style'
+import { StyledDrawerBody, StyledDrawerHeader } from '@/components/Navigation/bottomMenu/bottomMenu.style'
 
 interface BottomMenuProps {
   onClose: () => void
