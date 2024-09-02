@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export interface StyledChatContainerBoxProps {}
 
-export const StyledChatConWrap = styled.div<StyledChatContainerBoxProps>`
+export const StyledChatLayout = styled.div<StyledChatContainerBoxProps>`
   display: flex;
   height: 100%;
 `
@@ -116,4 +116,4 @@ export const StyledTypingIndicatorComplete = styled.div`
   }
 `
 
-export default StyledChatConWrap
+export default StyledChatLayout

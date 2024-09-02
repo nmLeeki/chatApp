@@ -6,12 +6,12 @@ import IconButton from '@mui/material/IconButton'
 import { Drawer, Tooltip } from '@mui/material'
 import menuIcon from '@/assets/images/menu.png'
 import BottomMenu from '@/components/Navigation/bottomMenu/bottomMenu'
-import StyledAppBar from '@/components/Navigation/ChatNav/ChatNav.style'
-import LeftMenu from '@/components/ChatContainer/LeftMenu/LeftMenu'
+import StyledAppBar from '@/components/ChatContainer/ChatHeader/ChatHeader.style'
+import LeftMenu from '@/components/Navigation/LeftMenu/LeftMenu'
 import { useSetRecoilState } from 'recoil'
 import { fontSizeState } from '@/recoil/'
 
-const ChatNav: React.FC = () => {
+const ChatHeader: React.FC = () => {
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false)
   const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
   const setFontSize = useSetRecoilState(fontSizeState)
@@ -83,4 +83,4 @@ const ChatNav: React.FC = () => {
   )
 }
 
-export default ChatNav
+export default ChatHeader

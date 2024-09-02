@@ -1,6 +1,6 @@
 // components/ChatContainer/LeftMenu/LeftMenu.tsx
 import React from 'react'
-import StyledLeftMenu from '@/components/ChatContainer/LeftMenu/LeftMenu.style'
+import StyledLeftMenu from '@/components/Navigation/LeftMenu/LeftMenu.style'
 import { Avatar, Conversation, ConversationList, Sidebar } from '@chatscope/chat-ui-kit-react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { chatRoomsState, selectedChatRoomIdState } from '@/recoil/'

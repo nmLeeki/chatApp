@@ -1,9 +1,9 @@
 import React from 'react'
 import { MainContainer } from '@chatscope/chat-ui-kit-react'
-import ChatNav from '@/components/Navigation/ChatNav/ChatNav'
 import ChatContainerComponent from '@/components/ChatContainer'
 import { useRecoilValue } from 'recoil'
 import { chatRoomsState, selectedChatRoomIdState } from '@/recoil/'
+import LeftMenu from '@/components/Navigation/LeftMenu/LeftMenu'
 
 const ChatPage: React.FC = () => {
   const chatRooms = useRecoilValue(chatRoomsState)
@@ -13,7 +13,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <MainContainer style={{ flexDirection: 'column', fontSize: '1.6rem' }}>
-      <ChatNav />
+      <LeftMenu />
       {currentChatRoom && <ChatContainerComponent />}
     </MainContainer>
   )

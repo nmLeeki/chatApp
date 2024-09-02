@@ -1,14 +1,14 @@
 import React from 'react'
-import { StyledChatConWrap, StyledChatCon } from '@/components/ChatContainer/ChatConWrap/ChatConWrap.style'
+import { StyledChatLayout, StyledChatCon } from '@/layout/ChatLayout/ChatLayout.style'
 interface ChatContainerBoxProps {
   children: React.ReactNode
 }
 
 const ChatConWrap: React.FC<ChatContainerBoxProps> = ({ children }) => {
   return (
-    <StyledChatConWrap>
+    <StyledChatLayout>
       <StyledChatCon>{children}</StyledChatCon>
-    </StyledChatConWrap>
+    </StyledChatLayout>
   )
 }
 
