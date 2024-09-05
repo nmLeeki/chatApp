@@ -26,6 +26,11 @@ export const chatRoomsState = atom<ChatRoom[]>({
     },
   ],
 })
+// 현재 채팅방의 메시지 목록
+export const currentRoomMessageState = atom<ChatMessage[]>({
+  key: 'currentRoomMessageState',
+  default: [],
+})
 
 // 선택된 채팅방 ID의 상태
 export const selectedChatRoomIdState = atom<string>({

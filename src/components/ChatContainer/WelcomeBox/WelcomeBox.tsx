@@ -18,7 +18,7 @@ const WelcomeBox: React.FC = () => {
       <Box display="flex" flexWrap="wrap" gap="1em" marginTop="1em">
         <Button variant="outlined">수신청약(D)</Button>
         <Button variant="outlined">퇴직연금(D)</Button>
-        <Button variant="outlined">여신(가계/기금)(D)</Button>
+        <Button variant="outlined">여신/기금)(D)</Button>
         <Button variant="outlined">기업여신/B2B(D)</Button>
         <Button variant="outlined">전자금융(D)</Button>
         <Button variant="outlined">외환(D)</Button>

@@ -14,7 +14,7 @@ const ChatPage: React.FC = () => {
   return (
     <MainContainer style={{ flexDirection: 'column', fontSize: '1.6rem' }}>
       <LeftMenu />
-      {currentChatRoom && <ChatContainerComponent />}
+      <ChatContainerComponent />
     </MainContainer>
   )
 }

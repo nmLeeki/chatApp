@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { TypingIndicator, MessageList } from '@chatscope/chat-ui-kit-react'
+import { MessageList } from '@chatscope/chat-ui-kit-react'
 import StyledChatList from '@/components/ChatContainer/MessageList/MessageList.style'
-import { StyledTypingIndicator } from '@/layout/ChatLayout/ChatLayout.style'
 import WelcomeBox from '@/components/ChatContainer/WelcomeBox/WelcomeBox'
-import { isChatbotTypingState } from '@/recoil/'
 import Chat from '@/components/ChatContainer/Message/Message'
-import { useRecoilValue } from 'recoil'
 
 const ChatList: React.FC = () => {
   useEffect(() => {
@@ -18,7 +15,6 @@ const ChatList: React.FC = () => {
       mediaQuery.removeEventListener('change', handleMediaChange)
     }
   }, [])
-  const isTyping = useRecoilValue(isChatbotTypingState)
 
   const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 768)
 
@@ -35,16 +31,9 @@ const ChatList: React.FC = () => {
 
   return (
     <StyledChatList>
-      <MessageList
-        typingIndicator={
-          isTyping ? (
-            <StyledTypingIndicator>
-              <TypingIndicator content="AI 답변을 생성중입니다..." />
-            </StyledTypingIndicator>
-          ) : null
-        }
-      >
+      <MessageList>
         <WelcomeBox />
+
         <Chat />
       </MessageList>
     </StyledChatList>
