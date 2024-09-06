@@ -8,19 +8,19 @@ export const chatRoomsState = atom<ChatRoom[]>({
   default: [
     {
       id: '1',
-      name: 'Lilly',
+      name: '대출',
       avatar: '/src/assets/ico_avatar_01.svg',
       messages: [{ message: 'Hello, I am ChatGPT for Lilly!', sender: 'ChatGPT', direction: 'incoming', position: 'single', timestamp: getCurrentKoreanTime() }],
     },
     {
       id: '2',
-      name: 'Joe',
+      name: '예금',
       avatar: '/src/assets/ico_avatar_01.svg',
       messages: [{ message: 'Hello, I am ChatGPT for Joe!', sender: 'ChatGPT', direction: 'incoming', position: 'single', timestamp: getCurrentKoreanTime() }],
     },
     {
       id: '3',
-      name: 'Emily',
+      name: '보험',
       avatar: '/src/assets/ico_avatar_01.svg',
       messages: [],
     },
@@ -52,4 +52,10 @@ export const isLeftDrawerOpenState = atom<boolean>({
 export const fontSizeState = atom<number>({
   key: 'fontSizeState',
   default: 1.6,
+})
+
+//목록을 선택했을때 선택을 감지하는 상태
+export const buttonClickState = atom<boolean>({
+  key: 'buttonClickState',
+  default: false,
 })

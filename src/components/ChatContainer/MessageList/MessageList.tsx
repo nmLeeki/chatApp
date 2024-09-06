@@ -33,7 +33,6 @@ const ChatList: React.FC = () => {
     <StyledChatList>
       <MessageList>
         <WelcomeBox />
-
         <Chat />
       </MessageList>
     </StyledChatList>
