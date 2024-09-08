@@ -4,27 +4,26 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import { Drawer, Tooltip } from '@mui/material'
-import menuIcon from '@/assets/images/menu.png'
-import BottomMenu from '@/components/Navigation/bottomMenu/bottomMenu'
-import StyledAppBar from '@/components/ChatContainer/ChatHeader/ChatHeader.style'
+import StyledChatNav, { StyledfontBtn, StyledMenuBtn } from './ChatHeader.style'
 import LeftMenu from '@/components/Navigation/LeftMenu/LeftMenu'
-import { useSetRecoilState } from 'recoil'
-import { fontSizeState } from '@/recoil/'
+import BottomMenu from '@/components/Navigation/BottomMenu/BottomMenu'
+import menuIcon from '@/assets/images/icons/menu01.svg'
+import fontSizeIcon from '@/assets/images/icons/font_size.svg'
 
-const ChatHeader: React.FC = () => {
+const ChatHeader: React.FC<{ onToggleFontSize: () => void; isLargeFont: boolean }> = ({ onToggleFontSize, isLargeFont }) => {
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false)
   const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
-  const setFontSize = useSetRecoilState(fontSizeState)
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768)
 
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768)
+      if (window.innerWidth < 768) {
+        setIsLeftDrawerOpen(false)
+      }
     }
 
     window.addEventListener('resize', handleResize)
-
-    // 초기 설정
     handleResize()
 
     return () => {
@@ -32,6 +31,7 @@ const ChatHeader: React.FC = () => {
     }
   }, [])
 
+  // left, bottom menu
   const toggleDrawer = (drawer: 'left' | 'bottom', open: boolean) => () => {
     if (drawer === 'left') {
       setIsLeftDrawerOpen(open)
@@ -40,46 +40,51 @@ const ChatHeader: React.FC = () => {
     }
   }
 
-  const handleToggleFontSize = () => {
-    setFontSize((prevSize) => (prevSize === 1.6 ? 1.8 : 1.6))
-  }
+  const onSelectChatRoom = (chatRoomId: string) => {}
 
   return (
-    <StyledAppBar>
+    <StyledChatNav>
       <AppBar position="static">
         <Toolbar>
           {!isDesktop && (
-            <IconButton
-              size="medium"
-              aria-label="메뉴"
-              onClick={() => setIsLeftDrawerOpen(true)} // LeftDrawer 열기
-            >
-              <img src={menuIcon} alt="Menu" />
-            </IconButton>
+            <StyledMenuBtn>
+              <IconButton size="medium" aria-label="메뉴" onClick={() => setIsLeftDrawerOpen(true)}>
+                <img src={menuIcon} alt="" />
+              </IconButton>
+            </StyledMenuBtn>
           )}
-          <Typography variant="h1" component="h1" align="center" sx={{ flexGrow: 1 }}>
+          <Typography variant="h1" align="center" sx={{ flexGrow: 1 }}>
             One Bot
           </Typography>
-          <Tooltip title="챗봇 선택" arrow>
+          <StyledfontBtn>
+            <Tooltip title={isLargeFont ? '글자 작게' : '글자 크게'} arrow>
+              <IconButton size="medium" aria-label={isLargeFont ? '글자 작게' : '글자 크게'} onClick={onToggleFontSize}>
+                <img src={fontSizeIcon} alt="" />
+              </IconButton>
+            </Tooltip>
+          </StyledfontBtn>
+          {/* <Tooltip title="챗봇 선택" arrow>
             <IconButton size="medium" aria-label="챗봇 선택" onClick={toggleDrawer('bottom', true)}>
               <img src={menuIcon} alt="Chatbot Selection" />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </Toolbar>
       </AppBar>
 
-      {/* LeftMenu Component */}
-      <Drawer
-        anchor="left"
-        open={isLeftDrawerOpen}
-        onClose={() => setIsLeftDrawerOpen(false)} // LeftDrawer 닫기
-      >
-        <LeftMenu />
-      </Drawer>
+      {!isDesktop && (
+        <Drawer anchor="left" open={isLeftDrawerOpen} onClose={() => setIsLeftDrawerOpen(false)}>
+          <LeftMenu
+            onClose={() => setIsLeftDrawerOpen(false)}
+            onSelectChatRoom={onSelectChatRoom} // onSelectChatRoom 전달
+          />
+        </Drawer>
+      )}
+
+      {/* 챗봇선택 BottomMenu */}
       <Drawer anchor="bottom" open={isBottomDrawerOpen} onClose={toggleDrawer('bottom', false)}>
         <BottomMenu onClose={toggleDrawer('bottom', false)} />
       </Drawer>
-    </StyledAppBar>
+    </StyledChatNav>
   )
 }
 

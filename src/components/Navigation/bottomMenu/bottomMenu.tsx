@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
 
-import menuIcon from '@/assets/images/menu.png'
-import { StyledDrawerBody, StyledDrawerHeader } from '@/components/Navigation/bottomMenu/bottomMenu.style'
+import menuIcon from '@/assets/images/icons/menu01.svg'
+import { StyledDrawerBody, StyledDrawerHeader } from '@/components/Navigation/BottomMenu/BottomMenu.style'
 
 interface BottomMenuProps {
   onClose: () => void

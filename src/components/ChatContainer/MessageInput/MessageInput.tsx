@@ -1,3 +1,8 @@
+import React, { useState } from 'react'
+import StyledChatInput, { StyledAddBtn } from '@/components/ChatContainer/MessageInput/MessageInput.style'
+import { Drawer, IconButton } from '@mui/material'
+import AddBottomMenu from '@/components/Navigation/AddBottomMenu/AddBottomMenu'
+import addIcon from '@/assets/images/icons/add01.svg'
 import { MessageInput } from '@chatscope/chat-ui-kit-react'
 import DOMPurify from 'dompurify'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
@@ -16,7 +21,7 @@ const MessageInputContainer: React.FC = () => {
   const currentRoomMessages = useRecoilValue(currentRoomMessageState) // 현재 채팅방의 메시지 목록
   const setCurrentRoomMessages = useSetRecoilState(currentRoomMessageState)
   const { sendMessageToChatGPT } = useChatGPT(API_ENDPOINT, OPENAI_API_KEY)
-
+  const [isBottomDrawerOpen, setIsBottomDrawerOpen] = useState(false)
   // 현재 채팅방 찾기
 
   const handleSendMessage = async (message: string) => {
@@ -51,10 +56,23 @@ const MessageInputContainer: React.FC = () => {
       console.error('메시지 전송 실패:', error)
     }
   }
-
+  const toggleDrawer = (drawer: 'bottom', open: boolean) => () => {
+    setIsBottomDrawerOpen(open)
+  }
   return (
     <>
-      <MessageInput placeholder="질문을 입력해 주세요." onSend={handleSendMessage} />
+      <StyledChatInput>
+        <StyledAddBtn>
+          <IconButton size="small" aria-label="추가 메뉴" onClick={toggleDrawer('bottom', true)}>
+            <img src={addIcon} alt="추가 메뉴" />
+          </IconButton>
+        </StyledAddBtn>
+        <MessageInput placeholder="질문을 입력해 주세요." onSend={handleSendMessage} attachButton={false} />
+      </StyledChatInput>
+
+      <Drawer anchor="bottom" open={isBottomDrawerOpen} onClose={toggleDrawer('bottom', false)}>
+        <AddBottomMenu onClose={toggleDrawer('bottom', false)} />
+      </Drawer>
     </>
   )
 }

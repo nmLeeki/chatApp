@@ -51,7 +51,7 @@ export const isLeftDrawerOpenState = atom<boolean>({
 // 챗봇이 글자 크기를 관리하는 상태
 export const fontSizeState = atom<number>({
   key: 'fontSizeState',
-  default: 1.6,
+  default: 1.4,
 })
 
 //목록을 선택했을때 선택을 감지하는 상태

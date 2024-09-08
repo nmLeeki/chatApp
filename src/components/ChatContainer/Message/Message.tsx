@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, MessageSeparator } from '@chatscope/chat-ui-kit-react'
-import { StyledChatBox } from '@/layout/ChatLayout/ChatLayout.style'
-import StyledChat from '@/components/ChatContainer/Message/Message.style'
+import StyledChat, {
+  StyledChatBox,
+  StyledChatBubble,
+  StyledChatDate,
+  StyledChatMessage,
+  StyledChatStart,
+  StyledChatText,
+  StyledChatTime,
+  StyledTypingIndicator,
+} from '@/components/ChatContainer/Message/Message.style'
 import DOMPurify from 'dompurify'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { buttonClickState, chatRoomsState, currentRoomMessageState, selectedChatRoomIdState } from '@/recoil/'
 import { getCurrentKoreanTime } from '@/services/util'
 import { ChatMessage } from '@/types/chatTypes'
+import { Typography } from '@mui/material'
 
 const Chat: React.FC = () => {
   const messages = useRecoilValue(currentRoomMessageState)
@@ -62,34 +71,61 @@ const Chat: React.FC = () => {
   }
 
   // 시스템 메시지 렌더링 컴포넌트
-  const SystemMessage: React.FC<{ message: string }> = ({ message }) => <div style={{ textAlign: 'center', margin: '10px 0', fontWeight: 'bold' }}>{message}</div>
+  const SystemMessage: React.FC<{ message: string }> = ({ message }) => (
+    <>
+      <StyledChatDate>
+        <MessageSeparator content={'2024.9.5'} />
+      </StyledChatDate>
+      <StyledChatStart>
+        <MessageSeparator content={`${message}과 대화를 시작합니다.`} />
+      </StyledChatStart>
+    </>
+  )
 
-  // 일반 메시지 렌더링 컴포넌트
+  // 채팅 메시지 챗봇 답변 컴포넌트
+  const ChatMessageAnswerBox: React.FC<{ message: ChatMessage }> = ({ message }) => (
+    <StyledChatBubble isChatGPT={message.sender === 'ChatGPT'}>
+      <Avatar name="Emily" src="/src/assets/images/icons/bot01.svg" />
+      <StyledTypingIndicator>
+        <Typography variant="body1">AI 답변을 생성 중입니다...</Typography>
+      </StyledTypingIndicator>
+      <StyledChatText>
+        <Typography variant="body1">안녕하세요. One 봇 입니다.</Typography>
+        <Typography variant="body1">퇴직연금 업무에 대해 궁금하신 점을 알려주세요.</Typography>
+      </StyledChatText>
+      <StyledChatMessage isChatGPT={message.sender === 'ChatGPT'}>{renderMessageContent(message.message)}</StyledChatMessage>
+      <StyledChatTime>
+        <MessageSeparator content={message.timestamp} />
+      </StyledChatTime>
+    </StyledChatBubble>
+  )
+
+  // 채팅 메시지 사용자 입력 컴포넌트
   const ChatMessageBox: React.FC<{ message: ChatMessage }> = ({ message }) => (
-    <StyledChatBox isChatGPT={message.sender === 'ChatGPT'}>
-      {message.sender === 'ChatGPT' && <Avatar name="Emily" src="https://chatscope.io/storybook/react/assets/emily-xzL8sDL2.svg" />}
-      <div
-        style={{
-          textAlign: message.sender === 'ChatGPT' ? 'left' : undefined,
-          marginRight: message.sender === 'ChatGPT' ? 0 : undefined,
-          marginLeft: message.sender === 'ChatGPT' ? undefined : 0,
-          background: '#f1f1f1',
-          padding: '10px',
-          borderRadius: '10px',
-        }}
-      >
-        {renderMessageContent(message.message)}
-      </div>
-      <MessageSeparator content={message.timestamp} />
-    </StyledChatBox>
+    <StyledChatBubble isChatGPT={message.sender === 'ChatGPT'}>
+      <StyledChatMessage isChatGPT={message.sender === 'ChatGPT'}>"{renderMessageContent(message.message)}"</StyledChatMessage>
+      <StyledChatTime>
+        <MessageSeparator content={message.timestamp} />
+      </StyledChatTime>
+    </StyledChatBubble>
   )
 
   return (
-    <StyledChat>
+    <>
       {messages.map((message, i) => (
-        <React.Fragment key={i}>{message.sender === 'system' ? <SystemMessage message={message.message} /> : <ChatMessageBox message={message} />}</React.Fragment>
+        <StyledChat key={i}>
+          <StyledChatBox isChatGPT={message.sender === 'ChatGPT'}>
+            {message.sender === 'system' ? (
+              <SystemMessage message={message.message} />
+            ) : message.sender === 'chatGPT' ? (
+              <ChatMessageAnswerBox message={message} />
+            ) : (
+              <ChatMessageBox message={message} />
+            )}
+          </StyledChatBox>
+        </StyledChat>
       ))}
-    </StyledChat>
+    </>
   )
 }
 

@@ -1,0 +1,11 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="check-circle-broken" clip-path="url(#clip0_251_5841)">
+<path id="Icon" d="M14.6663 7.3904V8.00373C14.6655 9.44135 14.2 10.8402 13.3392 11.9916C12.4785 13.1431 11.2685 13.9854 9.88991 14.393C8.5113 14.8006 7.03785 14.7517 5.68932 14.2535C4.3408 13.7552 3.18944 12.8345 2.40698 11.6284C1.62452 10.4224 1.25287 8.99578 1.34746 7.56128C1.44205 6.12678 1.99781 4.76129 2.93186 3.66845C3.86591 2.57561 5.1282 1.81399 6.53047 1.49717C7.93274 1.18034 9.39985 1.32529 10.713 1.9104" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Icon_2" d="M14.6667 2.6665L8 9.33984L6 7.33984" stroke="#F8B500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_251_5841">
+<rect width="16" height="16" fill="white"/>
+</clipPath>
+</defs>
+</svg>

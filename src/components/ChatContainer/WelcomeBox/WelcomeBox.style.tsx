@@ -6,7 +6,7 @@ export const StyledWelcomeBox = styled.div`
   flex-direction:column;
   justify-content:center;
   padding: 2em;
-  height:calc(100% - 3.5em);
+  height:calc(100% - 4em);
 `;
 
 export default StyledWelcomeBox;

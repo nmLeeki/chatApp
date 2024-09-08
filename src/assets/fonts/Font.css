@@ -1,54 +1,59 @@
-@charset "UTF-8";  
+@charset "UTF-8";
 
+/* KBFGText */
 @font-face {
-  font-family:"KBFGText";
-  font-style:normal;
-  font-weight:300;
-  src:url("../fonts/eot/KBFGTextL.eot");
-  src:local('※'), url('../fonts/eot/KBFGTextL.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGTextL.woff") format("woff"),
-  url("../fonts/woff2/KBFGTextL.woff2") format("woff2");
+  font-family: "KBFGText";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/eot/KBFGTextL.eot");
+  src: local('※'), url('../fonts/eot/KBFGTextL.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGTextL.woff") format("woff"),
+    url("../fonts/woff2/KBFGTextL.woff2") format("woff2");
 }
 
 @font-face {
-  font-family:"KBFGText";
-  font-style:normal;
-  font-weight:600;
-  src:url("../fonts/eot/KBFGTextM.eot");
-  src:local('※'), url('../fonts/eot/KBFGTextM.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGTextM.woff") format("woff"),
-  url("../fonts/woff2/KBFGTextM.woff2") format("woff2");
+  font-family: "KBFGText";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/eot/KBFGTextM.eot");
+  src: local('※'), url('../fonts/eot/KBFGTextM.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGTextM.woff") format("woff"),
+    url("../fonts/woff2/KBFGTextM.woff2") format("woff2");
 
 }
+
 @font-face {
-  font-family:"KBFGText";
-  font-style:normal;
+  font-family: "KBFGText";
+  font-style: normal;
   font-weight: bold;
-  src:url("../fonts/eot/KBFGTextM.eot");
-  src:local('※'), url('../fonts/eot/KBFGTextM.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGTextM.woff") format("woff"),
-  url("../fonts/woff2/KBFGTextM.woff2") format("woff2");
+  src: url("../fonts/eot/KBFGTextM.eot");
+  src: local('※'), url('../fonts/eot/KBFGTextM.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGTextM.woff") format("woff"),
+    url("../fonts/woff2/KBFGTextM.woff2") format("woff2");
 }
 
 @font-face {
-  font-family:"KBFGText";
-  font-style:normal;
-  font-weight:800;
-  src:url("../fonts/eot/KBFGTextB.eot");
-  src:local('※'), url('../fonts/eot/KBFGTextB.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGTextB.woff") format("woff"),
-  url("../fonts/woff2/KBFGTextB.woff2") format("woff2");
+  font-family: "KBFGText";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/eot/KBFGTextB.eot");
+  src: local('※'), url('../fonts/eot/KBFGTextB.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGTextB.woff") format("woff"),
+    url("../fonts/woff2/KBFGTextB.woff2") format("woff2");
+}
+
+
+/* KBFGDisplay */
+@font-face {
+  font-family: "KBFGDisplay";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/eot/KBFGDisplayL.eot");
+  src: local('※'), url('../fonts/eot/KBFGDisplayL.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGDisplayL.woff") format("woff"),
+    url("../fonts/woff2/KBFGDisplayL.woff2") format("woff2");
 }
 
 @font-face {
-  font-family:"KBFGDisplay";
-  font-style:normal;
-  font-weight:300;
-  src:url("../fonts/eot/KBFGDisplayL.eot");
-  src:local('※'), url('../fonts/eot/KBFGDisplayL.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGDisplayL.woff") format("woff"),
-  url("../fonts/woff2/KBFGDisplayL.woff2") format("woff2");
-}
-@font-face {
-  font-family:"KBFGDisplay";
-  font-style:normal;
-  font-weight:600;
-  src:url("../fonts/eot/KBFGDisplayM.eot");
-  src:local('※'), url('../fonts/eot/KBFGDisplayM.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGDisplayM.woff") format("woff"),
-  url("../fonts/woff/KBFGDisplayM.woff2") format("woff2");
+  font-family: "KBFGDisplay";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/eot/KBFGDisplayM.eot");
+  src: local('※'), url('../fonts/eot/KBFGDisplayM.eot?#iefix') format("embedded-opentype"), url("../fonts/woff/KBFGDisplayM.woff") format("woff"),
+    url("../fonts/woff/KBFGDisplayM.woff2") format("woff2");
 }

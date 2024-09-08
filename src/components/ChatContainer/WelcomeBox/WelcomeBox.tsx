@@ -5,9 +5,9 @@ import { Box, Button, Typography } from '@mui/material'
 const WelcomeBox: React.FC = () => {
   return (
     <StyledWelcomeBox>
-      <Typography variant="h2" component="h2" fontSize="1em">
-        안녕하세요.{' '}
-        <Typography variant="body2" color="red.main" fontWeight="600">
+      <Typography variant="h2" fontSize="1em">
+        안녕하세요.
+        <Typography variant="body2" color="red.main">
           One 봇
         </Typography>
         입니다.
@@ -16,12 +16,9 @@ const WelcomeBox: React.FC = () => {
         국민님, 무엇이 궁금하신가요?
       </Typography>
       <Box display="flex" flexWrap="wrap" gap="1em" marginTop="1em">
-        <Button variant="outlined">수신청약(D)</Button>
-        <Button variant="outlined">퇴직연금(D)</Button>
-        <Button variant="outlined">여신/기금)(D)</Button>
-        <Button variant="outlined">기업여신/B2B(D)</Button>
-        <Button variant="outlined">전자금융(D)</Button>
-        <Button variant="outlined">외환(D)</Button>
+        <Button variant="outlined">영업점 추천 예금 상품</Button>
+        <Button variant="outlined">오늘의 환율</Button>
+        <Button variant="outlined">KB인증서 발급하기</Button>
       </Box>
     </StyledWelcomeBox>
   )

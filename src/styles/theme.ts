@@ -39,9 +39,6 @@ const customizedTheme = createTheme({
     },
     red: redColor,
   },
-  typography: {
-    fontFamily: "'Roboto', 'Arial', sans-serif",
-  },
   components: {
     MuiTypography: {
       defaultProps: {
@@ -60,25 +57,39 @@ const customizedTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          color: '#222',
+          color: '#000',
         },
         h1: {
-          color: '#222',
-          fontWeight: 800,
-          fontSize: '1.75em',
+          fontWeight: 500,
+          fontSize: '1.7143em',
         },
         h2: {
-          color: '#222',
-          fontWeight: 600,
-          fontSize: '1.55em',
+          fontWeight: 500,
+          fontSize: '1.4286em',
+        },
+        h3: {
+          fontWeight: 500,
+          fontSize: '1.2857em',
+        },
+        h4: {
+          fontWeight: 500,
+          fontSize: '1.1429em',
         },
         body1: {
+          fontWeight: 500,
           fontSize: '1em',
-          color: '#333',
         },
         body2: {
+          fontWeight: 500,
           fontSize: '1em',
-          color: '#333',
+        },
+        subtitle1: {
+          fontWeight: 500,
+          fontSize: '1em',
+        },
+        subtitle2: {
+          fontWeight: 500,
+          fontSize: '1em',
         },
       },
     },
@@ -124,12 +135,21 @@ const customizedTheme = createTheme({
             color: '#fff',
           },
         },
+        text: {
+          color: '#4e473f',
+          backgroundColor: '#transparent',
+          '&:hover': {
+            backgroundColor: 'transparent',
+            color: '#4e473f',
+          },
+        },
       },
     },
     MuiIconButton: {
       styleOverrides: {
         root: {
           padding: '0.75em',
+          fontSize: '1em',
         },
         sizeSmall: {
           width: '1.5em',
@@ -152,18 +172,19 @@ const customizedTheme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#fbf9f7',
+          backgroundColor: '#f2f0ee',
           color: '#fff',
-          height: '3.5em',
+          height: '3.4286em',
+          boxShadow: 'none',
         },
       },
     },
     MuiToolbar: {
       styleOverrides: {
         root: {
-          minHeight: '48px',
+          minHeight: '3em',
           [theme.breakpoints.up('sm')]: {
-            minHeight: '3.5em',
+            minHeight: '3em',
           },
         },
       },

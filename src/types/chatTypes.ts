@@ -29,3 +29,12 @@ export const createChatMessage = (message: string, sender: 'user' | 'ChatGPT', d
     timestamp,
   }
 }
+
+export interface LeftMenuProps {
+  onSelectChatRoom: (chatRoomId: string) => void
+  onClose: () => void
+}
+
+export interface BottomMenuProps {
+  onClose: () => void
+}
