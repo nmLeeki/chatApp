@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
-export const StyledLeftMenu = styled.div<{ isMenuOpen: boolean; isClosing: boolean }>`
+interface LeftMenuProps {
+  $isMenuOpen: boolean // transient prop
+  $isClosing: boolean // transient prop
+}
+
+export const StyledLeftMenu = styled.div<LeftMenuProps>`
   .btn-close,
   .btn-toggle {
     width: 3.4286em;
@@ -11,7 +16,7 @@ export const StyledLeftMenu = styled.div<{ isMenuOpen: boolean; isClosing: boole
     padding: 1.1429em;
     transition: width 0.5s ease-in-out;
     background-color: transparent;
-    width: ${({ isClosing, isMenuOpen }) => (isClosing ? '4.8571em' : isMenuOpen ? '20em' : '4.8571em')};
+    width: ${({ $isClosing, $isMenuOpen }) => ($isClosing ? '4.8571em' : $isMenuOpen ? '20em' : '4.8571em')};
   }
 
   .cs-conversation-list {

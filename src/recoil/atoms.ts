@@ -59,3 +59,12 @@ export const buttonClickState = atom<boolean>({
   key: 'buttonClickState',
   default: false,
 })
+
+// 사용자 세션 상태를 관리하는 Recoil Atom (ID, 이름 등 추가 정보 포함)
+export const userSessionState = atom({
+  key: 'userSessionState', // 고유한 Atom의 key
+  default: {
+    userId: '', // 사용자 ID
+    userNm: '', // 사용자 이름
+  },
+})

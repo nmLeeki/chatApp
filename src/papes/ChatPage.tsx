@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { MainContainer } from '@chatscope/chat-ui-kit-react'
 import ChatContainerComponent from '@/components/ChatContainer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { chatRoomsState, selectedChatRoomIdState, fontSizeState } from '@/recoil/'
+import { chatRoomsState, selectedChatRoomIdState, fontSizeState, userSessionState } from '@/recoil/'
 import LeftMenu from '@/components/Navigation/LeftMenu/LeftMenu'
 import ChatLayout from '@/layout/ChatLayout/ChatLayout'
 import StyledChatCon, { StyledMainCon } from './ChatLayout.style'
+import SocketTest from '@/services/useWebSocket'
+import useWebSocket from '@/services/useWebSocket'
+import axios from 'axios'
 
 const ChatPage: React.FC = () => {
   const chatRooms = useRecoilValue(chatRoomsState) // Recoil 상태에서 채팅방 리스트 가져오기
@@ -14,6 +17,8 @@ const ChatPage: React.FC = () => {
   const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 768) // 화면 너비가 768px 이상일 경우를 체크
   const [fontSize, setFontSize] = useRecoilState(fontSizeState) // Recoil 상태에서 fontSize 가져오기 및 업데이트 함수
   const [isLargeFont, setIsLargeFont] = useState(fontSize === 2.0) // Recoil에서 가져온 fontSize 상태로 초기값 설정
+  // const { onConnect, disconnect } = useWebSocket()
+  // const userSession = useRecoilValue(userSessionState)
 
   // 화면 크기 변화에 따라 데스크탑 뷰 여부를 업데이트하는 함수
   useEffect(() => {
@@ -49,16 +54,57 @@ const ChatPage: React.FC = () => {
     // 채팅방 선택 시 필요한 동작을 여기서 처리 가능
   }
 
+  // const handleMessage = (message: { body: string }) => {
+  //   const body = JSON.parse(message.body)
+  //   console.log('Received message:', body) // "Hello, world!" 메시지 수신
+  // }
+
+  // const handleConnect = () => {
+  //   onConnect(handleMessage, (success) => {
+  //     if (success) {
+  //       console.log('WebSocket 연결 성공')
+  //     } else {
+  //       console.log('WebSocket 연결 실패')
+  //     }
+  //   })
+  // }
+
+  const handleApiTest = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8091/management/user/findUser`)
+      console.log(response.data)
+    } catch (error) {
+      console.error('API 호출 중 오류 발생:', error)
+    }
+  }
+
+  // // 구독을 처리하는 함수
+  // const handleSubscribe = () => {
+  //   const userId = userSession?.userId
+  //   onSubscribe(`/chat/${userId}`, (message: any) => {
+  //     handleMessage(message)
+  //     console.log('구독 성공')
+  //   })
+  // }
+  // // 버튼을 클릭하여 WebSocket 연결 해제 실행
+  // const handleDisconnectClick = () => {
+  //   disconnect()
+  // }
+
   return (
     <div className="App">
       <ChatLayout>
         <StyledMainCon>
           <MainContainer style={{ fontSize: `${fontSize}rem` }}>
             {isDesktopView && (
-              <LeftMenu
-                onClose={handleCloseMenu} // 메뉴 닫기 함수 전달
-                onSelectChatRoom={onSelectChatRoom} // 채팅방 선택 함수 전달
-              />
+              <>
+                <LeftMenu
+                  onClose={handleCloseMenu} // 메뉴 닫기 함수 전달
+                  onSelectChatRoom={onSelectChatRoom} // 채팅방 선택 함수 전달
+                />
+                <button onClick={handleApiTest}>api</button>
+                {/* <button onClick={handleSubscribe}>소켓구독</button> */}
+              </>
             )}
             <StyledChatCon>
               {currentChatRoom && (

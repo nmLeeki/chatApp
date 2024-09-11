@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { userSessionState } from '@/recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 const LoginContainer = styled.div`
   display: flex;
@@ -46,6 +48,7 @@ interface LoginPageProps {
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+  const setUserSession = useSetRecoilState(userSessionState) // 사용자 세션 상태 업데이트 함수
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
@@ -63,6 +66,14 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
         },
       })
       if (response.status === 200) {
+        const userId = response.data.userId // 로그인 응답에서 사용자 ID 가져오기
+        const userNm = response.data.userNm // 로그인 응답에서 사용자 이름 가져오기
+
+        // Recoil Atom에 사용자 정보 저장
+        setUserSession({
+          userId: userId,
+          userNm: userNm,
+        })
         onLogin()
         navigate('/')
       } else {

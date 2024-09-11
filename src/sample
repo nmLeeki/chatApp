@@ -1,0 +1,62 @@
+import { ref } from 'vue'
+import Stomp from 'stompjs'
+import SockJS from 'sockjs-client'
+import { useAuthStore } from '@/stores/auth'
+
+const websocketClient = ref()
+
+/* web Socket 연결요청 */
+const onConnect = (_callBack:Function | undefined) =>{
+
+    if( !websocketClient.value){
+        websocketClient.value = Stomp.over(function(){ return new SockJS("http://localhost:8091/ws")})
+        websocketClient.value.connect({},  (frame :any) =>{
+            console.log(frame)
+websocketClient.value.onSubscribe('/chat/'+useAuthStore().userSession?.userId, fnOnMessage)
+            _callBack!(true)
+        }, (error: Error) => {
+            console.log(error)
+            _callBack!(true)
+        })
+    } else {
+        _callBack!(true)
+    }
+}
+/* 구독 요청 */
+const onSubscribe = (_url: string, _receptionFunction :Function) =>{
+    interface Message {
+        sender: useAuthStore().userSession!.userNm,
+        content: string;
+        roomId: string;
+        type: string;
+    }
+
+    let sendMessage: Message = {ibe('/topic'+_url,_receptionFunction)
+}
+
+/*메시지 전송 */
+const onMessageSend = (_url: string,message: string,_roomId: string,_type: string) =>{
+    let sendMessage: Message = {
+        sender: userSession!.userNm,
+        content: message,
+        roomId: _roomId,
+        type: _type
+}
+    websocketClient.value.send('/app'+_url, {}, JSON.stringify(sendMessage))
+}
+
+  const result = ref('')
+  result.value = message.content
+const ontDisconnect =() =>{
+    if(websocketClient.value!){
+        websocketClient.value.disconnect()
+    }
+    websocketClient.value = null
+}
+
+/* 알림 메시지 수신 처리*/
+const fnOnMessage = (payload:any) =>{
+  let message = JSON.parse(payload.body)
+  console.log(message)
+  result.value = message.content
+}

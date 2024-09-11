@@ -16,6 +16,7 @@ import { buttonClickState, chatRoomsState, currentRoomMessageState, selectedChat
 import { getCurrentKoreanTime } from '@/services/util'
 import { ChatMessage } from '@/types/chatTypes'
 import { Typography } from '@mui/material'
+import useWebSocket from '@/services/useWebSocket'
 
 const Chat: React.FC = () => {
   const messages = useRecoilValue(currentRoomMessageState)

@@ -4,6 +4,8 @@ import { Avatar, Conversation, ConversationList, Sidebar } from '@chatscope/chat
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { buttonClickState, chatRoomsState, selectedChatRoomIdState } from '@/recoil/'
 import { Box, Button, IconButton, Typography } from '@mui/material'
+import { StyleSheetManager } from 'styled-components'
+import isPropValid from '@emotion/is-prop-valid'
 import { LeftMenuProps } from '@/types/chatTypes'
 import menuIcon from '@/assets/images/icons/menu01.svg'
 import arrowLeftIcon from '@/assets/images/icons/arrow-left01.svg'
@@ -58,48 +60,50 @@ const LeftMenu: React.FC<LeftMenuProps> = ({ onSelectChatRoom, onClose }) => {
   }
 
   return (
-    <StyledLeftMenu className={isDesktop ? 'pc-left-menu' : 'mo-left-menu'} isMenuOpen={isMenuOpen} isClosing={isClosing}>
-      {/* 모바일 환경에서는 닫기 버튼을 표시 */}
-      {!isDesktop && (
-        <IconButton size="small" aria-label="닫기" onClick={onClose} className="btn-close">
-          <img src={arrowLeftIcon} alt="" />
-        </IconButton>
-      )}
-      {/* PC 환경에서는 토글 버튼을 표시 */}
-      {isDesktop && (
-        <IconButton size="small" aria-label={isMenuOpen ? '메뉴 접힘' : '메뉴 펼침'} onClick={handleToggle} className={isMenuOpen ? 'btn-toggle close' : 'btn-toggle'}>
-          {isMenuOpen ? <img src={arrowLeftIcon} alt="" /> : <img src={menuIcon} alt="" />}
-        </IconButton>
-      )}
-      <Sidebar position="left" scrollable={true}>
-        <StyledUserInfo isMenuOpen={isMenuOpen} isClosing={isClosing}>
-          <Avatar src="/src/assets/images/icons/bot01.svg" name="김국민 대리" />
-          <StyledUserNm isMenuOpen={isMenuOpen} isClosing={isClosing}>
-            <Typography variant="body1">김국민 대리</Typography>
-            <Typography variant="body2">고객컨택혁신부서</Typography>
-          </StyledUserNm>
-        </StyledUserInfo>
-        <ConversationList>
-          {chatRooms.map((chatRoom) => (
-            <Conversation key={chatRoom.id}>
-              <Conversation.Content>
-                <StyledListBot isMenuOpen={isMenuOpen} isClosing={isClosing}>
-                  <Button variant="text" onClick={() => handleChatRoomClick(chatRoom.id)}>
-                    <Avatar src={chatRoom.avatar} name={chatRoom.name} />
-                    <Typography variant="body2">{chatRoom.name}</Typography>
-                  </Button>
-                  <StyledFavorite>
-                    <IconButton onClick={() => toggleFavorite(chatRoom.id)}>
-                      <img src={favorites[chatRoom.id] ? starIconOn : starIconOff} alt={favorites[chatRoom.id] ? '즐겨찾기 해제' : '즐겨찾기 등록'} />
-                    </IconButton>
-                  </StyledFavorite>
-                </StyledListBot>
-              </Conversation.Content>
-            </Conversation>
-          ))}
-        </ConversationList>
-      </Sidebar>
-    </StyledLeftMenu>
+    <StyleSheetManager shouldForwardProp={isPropValid}>
+      <StyledLeftMenu className={isDesktop ? 'pc-left-menu' : 'mo-left-menu'} $isMenuOpen={isMenuOpen} $isClosing={isClosing}>
+        {/* 모바일 환경에서는 닫기 버튼을 표시 */}
+        {!isDesktop && (
+          <IconButton size="small" aria-label="닫기" onClick={onClose} className="btn-close">
+            <img src={arrowLeftIcon} alt="" />
+          </IconButton>
+        )}
+        {/* PC 환경에서는 토글 버튼을 표시 */}
+        {isDesktop && (
+          <IconButton size="small" aria-label={isMenuOpen ? '메뉴 접힘' : '메뉴 펼침'} onClick={handleToggle} className={isMenuOpen ? 'btn-toggle close' : 'btn-toggle'}>
+            {isMenuOpen ? <img src={arrowLeftIcon} alt="" /> : <img src={menuIcon} alt="" />}
+          </IconButton>
+        )}
+        <Sidebar position="left" scrollable={true}>
+          <StyledUserInfo isMenuOpen={isMenuOpen} isClosing={isClosing}>
+            <Avatar src="/src/assets/images/icons/bot01.svg" name="김국민 대리" />
+            <StyledUserNm isMenuOpen={isMenuOpen} isClosing={isClosing}>
+              <Typography variant="body1">김국민 대리</Typography>
+              <Typography variant="body2">고객컨택혁신부서</Typography>
+            </StyledUserNm>
+          </StyledUserInfo>
+          <ConversationList>
+            {chatRooms.map((chatRoom) => (
+              <Conversation key={chatRoom.id}>
+                <Conversation.Content>
+                  <StyledListBot isMenuOpen={isMenuOpen} isClosing={isClosing}>
+                    <Button variant="text" onClick={() => handleChatRoomClick(chatRoom.id)}>
+                      <Avatar src={chatRoom.avatar} name={chatRoom.name} />
+                      <Typography variant="body2">{chatRoom.name}</Typography>
+                    </Button>
+                    <StyledFavorite>
+                      <IconButton onClick={() => toggleFavorite(chatRoom.id)}>
+                        <img src={favorites[chatRoom.id] ? starIconOn : starIconOff} alt={favorites[chatRoom.id] ? '즐겨찾기 해제' : '즐겨찾기 등록'} />
+                      </IconButton>
+                    </StyledFavorite>
+                  </StyledListBot>
+                </Conversation.Content>
+              </Conversation>
+            ))}
+          </ConversationList>
+        </Sidebar>
+      </StyledLeftMenu>
+    </StyleSheetManager>
   )
 }
 
